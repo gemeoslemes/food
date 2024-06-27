@@ -22,7 +22,7 @@ public class Categorias implements Serializable {
     @Column(nullable = false)
     private String descricao;
 
-    @OneToMany(mappedBy = "categorias", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "categorias", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SubCategorias> subCategorias;
 
     public Categorias() {}
