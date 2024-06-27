@@ -29,7 +29,7 @@ public class Itens implements Serializable {
     private byte fotoItem;
 
     @ManyToOne
-    @JoinColumn(name = "subcategorias")
+    @JoinColumn(name = "id_sub_categorias")
     private SubCategorias subCategorias;
 
     public Itens() {
