@@ -1,5 +1,7 @@
 package br.com.food.domain;
 
+import br.com.food.records.CategoriaDetalhamentoDTO;
+import br.com.food.records.SubCategoriasDTO;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -26,6 +28,12 @@ public class SubCategorias implements Serializable {
     private Categorias categorias;
 
     public SubCategorias() {}
+
+    public SubCategorias(SubCategoriasDTO dto, Categorias categorias) {
+        this.nome = dto.nome();
+        this.descricao = dto.descricao();
+        this.categorias = categorias;
+    }
 
     @Override
     public boolean equals(Object o) {
