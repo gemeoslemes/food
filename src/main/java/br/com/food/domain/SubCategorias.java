@@ -22,8 +22,8 @@ public class SubCategorias implements Serializable {
     private String descricao;
 
     @ManyToOne
-    @JoinColumn(name = "categorias_id", nullable = false)
-    private Categorias categoriasId;
+    @JoinColumn(name = "id_categoria", nullable = false)
+    private Categorias categorias;
 
     public SubCategorias() {}
 
@@ -32,12 +32,12 @@ public class SubCategorias implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SubCategorias that = (SubCategorias) o;
-        return Objects.equals(id, that.id) && Objects.equals(nome, that.nome) && Objects.equals(descricao, that.descricao) && Objects.equals(categoriasId, that.categoriasId);
+        return Objects.equals(id, that.id) && Objects.equals(nome, that.nome) && Objects.equals(descricao, that.descricao) && Objects.equals(categorias, that.categorias);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome, descricao, categoriasId);
+        return Objects.hash(id, nome, descricao, categorias);
     }
 
     public Long getId() {
@@ -64,11 +64,11 @@ public class SubCategorias implements Serializable {
         this.descricao = descricao;
     }
 
-    public Categorias getCategoriasId() {
-        return categoriasId;
+    public Categorias getCategorias() {
+        return categorias;
     }
 
-    public void setCategoriasId(Categorias categoriasId) {
-        this.categoriasId = categoriasId;
+    public void setCategorias(Categorias categorias) {
+        this.categorias = categorias;
     }
 }
