@@ -5,5 +5,5 @@ public enum Status {
     EM_PROCESSO,
     FINALIZADO,
     CANCELADO,
-    DEVOLVIDO
+    ENTREGUE
 }
