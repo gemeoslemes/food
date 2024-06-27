@@ -23,6 +23,7 @@ public class Pedidos implements Serializable {
     @Column(name = "valor_total", nullable = false)
     private BigDecimal valorTotal;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private Status status;
 
