@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -27,20 +28,21 @@ public class Pedidos implements Serializable {
     @Column(name = "status", nullable = false)
     private Status status;
 
-    public Pedidos() {
+    @OneToMany(mappedBy = "pedidos", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ItemPedidos> itemPedidos;
 
-    }
+    public Pedidos() {}
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Pedidos pedidos)) return false;
-        return Objects.equals(id, pedidos.id) && Objects.equals(dataHora, pedidos.dataHora) && Objects.equals(valorTotal, pedidos.valorTotal) && status == pedidos.status;
+        return Objects.equals(id, pedidos.id) && Objects.equals(dataHora, pedidos.dataHora) && Objects.equals(valorTotal, pedidos.valorTotal) && status == pedidos.status && Objects.equals(itemPedidos, pedidos.itemPedidos);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, dataHora, valorTotal, status);
+        return Objects.hash(id, dataHora, valorTotal, status, itemPedidos);
     }
 
     public Long getId() {
@@ -49,6 +51,14 @@ public class Pedidos implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<ItemPedidos> getItemPedidos() {
+        return itemPedidos;
+    }
+
+    public void setItemPedidos(List<ItemPedidos> itemPedidos) {
+        this.itemPedidos = itemPedidos;
     }
 
     public LocalDateTime getDataHora() {

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -32,6 +33,9 @@ public class Itens implements Serializable {
     @JoinColumn(name = "id_sub_categorias")
     private SubCategorias subCategorias;
 
+    @OneToMany(mappedBy = "itens", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ItemPedidos> itemPedidos;
+
     public Itens() {
 
     }
@@ -40,12 +44,12 @@ public class Itens implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Itens itens)) return false;
-        return fotoItem == itens.fotoItem && Objects.equals(id, itens.id) && Objects.equals(nome, itens.nome) && Objects.equals(descricao, itens.descricao) && Objects.equals(preco, itens.preco) && Objects.equals(subCategorias, itens.subCategorias);
+        return fotoItem == itens.fotoItem && Objects.equals(id, itens.id) && Objects.equals(nome, itens.nome) && Objects.equals(descricao, itens.descricao) && Objects.equals(preco, itens.preco) && Objects.equals(subCategorias, itens.subCategorias) && Objects.equals(itemPedidos, itens.itemPedidos);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome, descricao, preco, fotoItem, subCategorias);
+        return Objects.hash(id, nome, descricao, preco, fotoItem, subCategorias, itemPedidos);
     }
 
     public static long getSerialVersionUID() {
@@ -62,6 +66,14 @@ public class Itens implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<ItemPedidos> getItemPedidos() {
+        return itemPedidos;
+    }
+
+    public void setItemPedidos(List<ItemPedidos> itemPedidos) {
+        this.itemPedidos = itemPedidos;
     }
 
     public String getNome() {
