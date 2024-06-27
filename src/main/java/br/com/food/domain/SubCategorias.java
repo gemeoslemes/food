@@ -3,12 +3,11 @@ package br.com.food.domain;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "categorias")
-public class Categorias implements Serializable {
+@Table(name = "sub_categorias")
+public class SubCategorias implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -22,22 +21,23 @@ public class Categorias implements Serializable {
     @Column(nullable = false)
     private String descricao;
 
-    @OneToMany(mappedBy = "categorias", fetch = FetchType.EAGER)
-    private List<SubCategorias> subCategorias;
+    @ManyToOne
+    @JoinColumn(name = "categorias_id", nullable = false)
+    private Categorias categoriasId;
 
-    public Categorias() {}
+    public SubCategorias() {}
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Categorias that = (Categorias) o;
-        return Objects.equals(id, that.id) && Objects.equals(nome, that.nome) && Objects.equals(descricao, that.descricao) && Objects.equals(subCategorias, that.subCategorias);
+        SubCategorias that = (SubCategorias) o;
+        return Objects.equals(id, that.id) && Objects.equals(nome, that.nome) && Objects.equals(descricao, that.descricao) && Objects.equals(categoriasId, that.categoriasId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome, descricao, subCategorias);
+        return Objects.hash(id, nome, descricao, categoriasId);
     }
 
     public Long getId() {
@@ -64,11 +64,11 @@ public class Categorias implements Serializable {
         this.descricao = descricao;
     }
 
-    public List<SubCategorias> getSubCategorias() {
-        return subCategorias;
+    public Categorias getCategoriasId() {
+        return categoriasId;
     }
 
-    public void setSubCategorias(List<SubCategorias> subCategorias) {
-        this.subCategorias = subCategorias;
+    public void setCategoriasId(Categorias categoriasId) {
+        this.categoriasId = categoriasId;
     }
 }
