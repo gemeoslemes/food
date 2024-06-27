@@ -20,18 +20,32 @@ public class CategoriasController {
     @PostMapping
     public ResponseEntity<CategoriaDetalhamentoDTO> criaCategoria(@RequestBody CategoriaDTO dto) {
         Categorias categoria = new Categorias(dto);
-        CategoriaDetalhamentoDTO categoriaCriada = categoriasService.criarCategoria(categoria);
-        return ResponseEntity.ok(categoriaCriada);
+        var categoriaCriada = categoriasService.criarCategoria(categoria);
+        return ResponseEntity.ok(new CategoriaDetalhamentoDTO(categoriaCriada));
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<CategoriaDetalhamentoDTO> mostrarCategoriaPorId(@PathVariable Long id) {
+    public ResponseEntity<CategoriaDetalhamentoDTO> mostrarCategoriaPorId(@PathVariable("id") Long id) {
         var mostrarCategoriaPorId = categoriasService.mostrarCategoriaPorId(id);
         return ResponseEntity.ok(new CategoriaDetalhamentoDTO(mostrarCategoriaPorId));
     }
 
-//    @GetMapping
-//    public ResponseEntity<List<CategoriaDetalhamentoDTO>> listaTodasCategorias(CategoriaDTO dto) {
-//        categoriasService.listaTodasCategorias(dto);
-//    }
+    @GetMapping
+    public ResponseEntity<List<CategoriaDetalhamentoDTO>> listaTodasCategorias() {
+        List<CategoriaDetalhamentoDTO> listaDeCategorias = categoriasService.listaTodasCategorias();
+        return ResponseEntity.ok(listaDeCategorias);
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<CategoriaDetalhamentoDTO> atualizarCategoria(@RequestBody CategoriaDTO dto,
+                                                                       @PathVariable("id") Long id) {
+        Categorias categoriaAtualizada = categoriasService.atualizarCategoria(dto, id);
+        return ResponseEntity.ok(new CategoriaDetalhamentoDTO(categoriaAtualizada));
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> deletarCategoria(@PathVariable("id") Long id) {
+        categoriasService.deletarCategoria(id);
+        return ResponseEntity.noContent().build();
+    }
 }

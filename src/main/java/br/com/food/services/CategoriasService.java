@@ -8,7 +8,9 @@ import br.com.food.repositories.CategoriasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoriasService {
@@ -16,9 +18,8 @@ public class CategoriasService {
     @Autowired
     private CategoriasRepository categoriasRepository;
 
-    public CategoriaDetalhamentoDTO criarCategoria(Categorias categoria) {
-        Categorias categoriaCriada = categoriasRepository.save(categoria);
-        return new CategoriaDetalhamentoDTO(categoriaCriada);
+    public Categorias criarCategoria(Categorias categoria) {
+        return categoriasRepository.save(categoria);
     }
 
     public Categorias mostrarCategoriaPorId(Long id) {
@@ -26,7 +27,29 @@ public class CategoriasService {
                 .orElseThrow(() -> new ResourceNotFoundException("Categoria não encontrada!"));
     }
 
-//    public List<CategoriaDetalhamentoDTO> listaTodasCategorias(CategoriaDTO dto) {
-//
-//    }
+    public List<CategoriaDetalhamentoDTO> listaTodasCategorias() {
+        List<Categorias> categorias = categoriasRepository.findAll();
+
+        List<CategoriaDetalhamentoDTO> listaDTO = categorias.stream()
+                .map(c -> new CategoriaDetalhamentoDTO(c))
+                .collect(Collectors.toList());
+
+        return listaDTO;
+    }
+
+    public Categorias atualizarCategoria(CategoriaDTO dto, Long id) {
+        var categoriaASerAtualizada = mostrarCategoriaPorId(id);
+
+        if (dto.nome() != null && !dto.nome().isBlank()) {
+            categoriaASerAtualizada.setNome(dto.nome());
+        }
+        if (dto.descricao() != null && !dto.descricao().isBlank()) {
+            categoriaASerAtualizada.setDescricao(dto.descricao());
+        }
+        return categoriasRepository.save(categoriaASerAtualizada);
+    }
+
+    public void deletarCategoria(Long id) {
+        categoriasRepository.deleteById(id);
+    }
 }
