@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -30,6 +31,9 @@ public class Personalizacoes implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_itens")
     private Itens itens;
+
+    @OneToMany(mappedBy = "personalizacoes", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PersonalizacoesPedidos> personalizacoesPedidos;
 
     public Personalizacoes() {}
 
