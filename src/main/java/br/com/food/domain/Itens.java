@@ -36,20 +36,29 @@ public class Itens implements Serializable {
     @OneToMany(mappedBy = "itens", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ItemPedidos> itemPedidos;
 
-    public Itens() {
+    @OneToMany(mappedBy = "itens", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Personalizacoes> personalizacoes;
 
-    }
+    public Itens() {}
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Itens itens)) return false;
-        return fotoItem == itens.fotoItem && Objects.equals(id, itens.id) && Objects.equals(nome, itens.nome) && Objects.equals(descricao, itens.descricao) && Objects.equals(preco, itens.preco) && Objects.equals(subCategorias, itens.subCategorias) && Objects.equals(itemPedidos, itens.itemPedidos);
+        return fotoItem == itens.fotoItem && Objects.equals(id, itens.id) && Objects.equals(nome, itens.nome) && Objects.equals(descricao, itens.descricao) && Objects.equals(preco, itens.preco) && Objects.equals(subCategorias, itens.subCategorias) && Objects.equals(itemPedidos, itens.itemPedidos) && Objects.equals(personalizacoes, itens.personalizacoes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome, descricao, preco, fotoItem, subCategorias, itemPedidos);
+        return Objects.hash(id, nome, descricao, preco, fotoItem, subCategorias, itemPedidos, personalizacoes);
+    }
+
+    public List<Personalizacoes> getPersonalizacoes() {
+        return personalizacoes;
+    }
+
+    public void setPersonalizacoes(List<Personalizacoes> personalizacoes) {
+        this.personalizacoes = personalizacoes;
     }
 
     public static long getSerialVersionUID() {
