@@ -1,5 +1,6 @@
 package br.com.food.domain;
 
+import br.com.food.records.PersonalizacaoDTO;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -36,6 +37,14 @@ public class Personalizacoes implements Serializable {
     private List<PersonalizacoesPedidos> personalizacoesPedidos;
 
     public Personalizacoes() {}
+
+    public Personalizacoes(PersonalizacaoDTO dto, Itens item) {
+        this.nome = dto.nome();
+        this.descricao = dto.descricao();
+        this.precoAdicional = dto.preco();
+        this.quantidade = dto.quantidade();
+        this.itens = item;
+    }
 
     @Override
     public boolean equals(Object o) {
