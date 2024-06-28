@@ -1,2 +1,12 @@
-package br.com.food.records;public record PersonalizacoesPedidosDTO() {
+package br.com.food.records;
+
+import java.math.BigDecimal;
+
+public record PersonalizacoesPedidosDTO(
+        Long id,
+        String nome,
+        String descricao,
+        BigDecimal precoAdicional,
+        Integer quantidade
+) {
 }

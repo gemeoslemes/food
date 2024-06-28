@@ -1,2 +1,8 @@
-package br.com.food.records;public record PedidosDTO() {
+package br.com.food.records;
+
+import java.util.List;
+
+public record PedidosDTO(
+        List<ItemPedidosDTO> itemPedidos
+) {
 }

@@ -2,6 +2,7 @@ package br.com.food.records;
 
 import br.com.food.domain.Itens;
 import br.com.food.domain.Personalizacoes;
+import br.com.food.domain.PersonalizacoesPedidos;
 
 import java.math.BigDecimal;
 
@@ -17,4 +18,6 @@ public record PersonalizacoesDetalhamentoDTO(
         this(personalizacoes.getId(), personalizacoes.getNome(), personalizacoes.getDescricao(),
                 personalizacoes.getPrecoAdicional(), personalizacoes.getQuantidade(), personalizacoes.getItens().getId());
     }
+
+
 }

@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,7 +30,7 @@ public class Pedidos implements Serializable {
     private Status status;
 
     @OneToMany(mappedBy = "pedidos", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ItemPedidos> itemPedidos;
+    private List<ItemPedidos> itemPedidos = new ArrayList<>();
 
     public Pedidos() {}
 
