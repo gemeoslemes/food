@@ -1,6 +1,5 @@
 package br.com.food.controllers;
 
-import br.com.food.enuns.Status;
 import br.com.food.records.PedidosAtualizaStatusDTO;
 import br.com.food.records.PedidosDTO;
 import br.com.food.records.PedidosDetalhamentoDTO;
@@ -47,4 +46,6 @@ public class PedidosController {
         var pedidos = service.buscarPedidosAtivos();
         return ResponseEntity.ok(pedidos);
     }
+
+
 }
