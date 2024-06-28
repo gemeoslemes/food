@@ -5,6 +5,7 @@ import br.com.food.records.SubCategoriasDTO;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -27,6 +28,9 @@ public class SubCategorias implements Serializable {
     @JoinColumn(name = "id_categoria", nullable = false)
     private Categorias categorias;
 
+    @OneToMany(mappedBy = "subCategorias", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Itens> itens;
+
     public SubCategorias() {}
 
     public SubCategorias(SubCategoriasDTO dto, Categorias categorias) {
@@ -40,12 +44,12 @@ public class SubCategorias implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SubCategorias that = (SubCategorias) o;
-        return Objects.equals(id, that.id) && Objects.equals(nome, that.nome) && Objects.equals(descricao, that.descricao) && Objects.equals(categorias, that.categorias);
+        return Objects.equals(id, that.id) && Objects.equals(nome, that.nome) && Objects.equals(descricao, that.descricao) && Objects.equals(categorias, that.categorias) && Objects.equals(itens, that.itens);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome, descricao, categorias);
+        return Objects.hash(id, nome, descricao, categorias, itens);
     }
 
     public Long getId() {
@@ -78,5 +82,13 @@ public class SubCategorias implements Serializable {
 
     public void setCategorias(Categorias categorias) {
         this.categorias = categorias;
+    }
+
+    public List<Itens> getItens() {
+        return itens;
+    }
+
+    public void setItens(List<Itens> itens) {
+        this.itens = itens;
     }
 }
