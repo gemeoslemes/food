@@ -1,9 +1,11 @@
 package br.com.food.domain;
 
+import br.com.food.records.ItensDTO;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,10 +29,10 @@ public class Itens implements Serializable {
 
     @Lob
     @Column(name = "foto_item", nullable = false)
-    private byte fotoItem;
+    private String fotoItem;
 
     @ManyToOne
-    @JoinColumn(name = "id_sub_categorias")
+    @JoinColumn(name = "id_sub_categoria")
     private SubCategorias subCategorias;
 
     @OneToMany(mappedBy = "itens", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -41,11 +43,20 @@ public class Itens implements Serializable {
 
     public Itens() {}
 
+    public Itens(ItensDTO dto, SubCategorias subCategorias) {
+        this.nome = dto.nome();
+        this.descricao = dto.descricao();
+        this.preco = dto.preco();
+        this.fotoItem = dto.foto();
+        this.subCategorias = subCategorias;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Itens itens)) return false;
-        return fotoItem == itens.fotoItem && Objects.equals(id, itens.id) && Objects.equals(nome, itens.nome) && Objects.equals(descricao, itens.descricao) && Objects.equals(preco, itens.preco) && Objects.equals(subCategorias, itens.subCategorias) && Objects.equals(itemPedidos, itens.itemPedidos) && Objects.equals(personalizacoes, itens.personalizacoes);
+        if (o == null || getClass() != o.getClass()) return false;
+        Itens itens = (Itens) o;
+        return Objects.equals(id, itens.id) && Objects.equals(nome, itens.nome) && Objects.equals(descricao, itens.descricao) && Objects.equals(preco, itens.preco) && Objects.equals(fotoItem, itens.fotoItem) && Objects.equals(subCategorias, itens.subCategorias) && Objects.equals(itemPedidos, itens.itemPedidos) && Objects.equals(personalizacoes, itens.personalizacoes);
     }
 
     @Override
@@ -109,11 +120,11 @@ public class Itens implements Serializable {
         this.preco = preco;
     }
 
-    public byte getFotoItem() {
+    public String getFotoItem() {
         return fotoItem;
     }
 
-    public void setFotoItem(byte fotoItem) {
+    public void setFotoItem(String fotoItem) {
         this.fotoItem = fotoItem;
     }
 

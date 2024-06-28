@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/subcategorias/v1")
-public class SubCategoriasControllers {
+public class SubCategoriasController {
     @Autowired
     private SubCategoriasService service;
 
