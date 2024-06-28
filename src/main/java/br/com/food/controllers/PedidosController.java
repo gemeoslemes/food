@@ -1,13 +1,18 @@
 package br.com.food.controllers;
 
+import br.com.food.exceptions.InvalidDateFormatException;
 import br.com.food.records.PedidosAtualizaStatusDTO;
 import br.com.food.records.PedidosDTO;
 import br.com.food.records.PedidosDetalhamentoDTO;
 import br.com.food.services.PedidosService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @RestController
@@ -47,5 +52,24 @@ public class PedidosController {
         return ResponseEntity.ok(pedidos);
     }
 
+    @GetMapping("/ativos/finalizados-hoje")
+    public ResponseEntity<List<PedidosDetalhamentoDTO>> buscarPedidosAtivosComStatusEntregueHoje() {
+        var pedidos = service.buscarPedidosAtivosComStatusEntregueHoje();
+        return ResponseEntity.ok(pedidos);
+    }
 
+    @GetMapping("/ativos/finalizados-por-periodo")
+    public ResponseEntity<List<PedidosDetalhamentoDTO>> buscarPedidosAtivosComStatusEData(
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime dataInicio,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime dataFim
+
+    ) {
+        try {
+            var pedidos = service.buscarPedidosAtivosEPorData(dataInicio, dataFim);
+            return ResponseEntity.ok(pedidos);
+        } catch (Exception e) {
+            throw new InvalidDateFormatException("Formato de data inválido. Por favor, use o formato yyyy-MM-dd'T'HH:mm:ss");
+        }
+
+    }
 }

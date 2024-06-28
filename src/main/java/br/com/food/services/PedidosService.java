@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -96,15 +97,31 @@ public class PedidosService {
 
     public List<PedidosDetalhamentoDTO> listarTodosOsPedidos() {
         List<Pedidos> pedidos = pedidosRepository.findAll();
-        List<PedidosDetalhamentoDTO> dtos = pedidos.stream().map(PedidosDetalhamentoDTO::new)
-                .collect(Collectors.toList());
+        List<PedidosDetalhamentoDTO> dtos = convertToPedidosDetalhamentoDTOs(pedidos);
         return dtos;
     }
 
     public List<PedidosDetalhamentoDTO> buscarPedidosAtivos() {
         List<Pedidos> pedidos = pedidosRepository.findByStatusNot(Status.CANCELADO);
-        List<PedidosDetalhamentoDTO> dtos = pedidos.stream().map(PedidosDetalhamentoDTO::new)
-                .collect(Collectors.toList());
+        List<PedidosDetalhamentoDTO> dtos = convertToPedidosDetalhamentoDTOs(pedidos);
         return dtos;
+    }
+
+    public List<PedidosDetalhamentoDTO> buscarPedidosAtivosComStatusEntregueHoje() {
+        List<Pedidos> pedidos = pedidosRepository.buscarPedidosAtivosComStatusEntregueHoje(Status.ENTREGUE);
+        List<PedidosDetalhamentoDTO> dtos = convertToPedidosDetalhamentoDTOs(pedidos);
+        return dtos;
+    }
+
+    public List<PedidosDetalhamentoDTO> buscarPedidosAtivosEPorData(LocalDateTime inicio, LocalDateTime fim) {
+        var pedidos = pedidosRepository.buscarPedidosAtivosComStatusEData(Status.ENTREGUE, inicio, fim);
+        List<PedidosDetalhamentoDTO> dtos = convertToPedidosDetalhamentoDTOs(pedidos);
+        return dtos;
+    }
+
+    public List<PedidosDetalhamentoDTO> convertToPedidosDetalhamentoDTOs(List<Pedidos> pedidos) {
+        return pedidos.stream()
+                .map(PedidosDetalhamentoDTO::new)
+                .collect(Collectors.toList());
     }
 }
