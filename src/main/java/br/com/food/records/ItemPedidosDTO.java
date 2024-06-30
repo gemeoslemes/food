@@ -7,4 +7,9 @@ public record ItemPedidosDTO(
         Integer quantidade,
         List<PersonalizacoesDetalhamentoDTO> personalizacoesPedidos
 ) {
+    public ItemPedidosDTO {
+        if (quantidade == null) {
+            quantidade = 1;
+        }
+    }
 }

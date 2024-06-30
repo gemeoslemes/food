@@ -1,5 +1,6 @@
 package br.com.food.domain;
 
+import br.com.food.exceptions.NotFoundArgumentDTOs;
 import br.com.food.records.CategoriaDTO;
 import jakarta.persistence.*;
 

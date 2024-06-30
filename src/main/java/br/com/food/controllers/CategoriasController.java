@@ -4,6 +4,7 @@ import br.com.food.domain.Categorias;
 import br.com.food.records.CategoriaDTO;
 import br.com.food.records.CategoriaDetalhamentoDTO;
 import br.com.food.services.CategoriasService;
+import br.com.food.utils.DTOsValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +18,12 @@ public class CategoriasController {
     @Autowired
     CategoriasService categoriasService;
 
+    @Autowired
+    DTOsValidator dtosValidator;
+
     @PostMapping
     public ResponseEntity<CategoriaDetalhamentoDTO> criaCategoria(@RequestBody CategoriaDTO dto) {
+        dtosValidator.validateDTO(dto);
         Categorias categoria = new Categorias(dto);
         var categoriaCriada = categoriasService.criarCategoria(categoria);
         return ResponseEntity.ok(new CategoriaDetalhamentoDTO(categoriaCriada));

@@ -5,14 +5,13 @@ import br.com.food.records.PedidosAtualizaStatusDTO;
 import br.com.food.records.PedidosDTO;
 import br.com.food.records.PedidosDetalhamentoDTO;
 import br.com.food.services.PedidosService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 @RestController
@@ -23,7 +22,7 @@ public class PedidosController {
     private PedidosService service;
 
     @PostMapping
-    public ResponseEntity<PedidosDetalhamentoDTO> criarPedido(@RequestBody PedidosDTO dto) {
+    public ResponseEntity<PedidosDetalhamentoDTO> criarPedido(@Valid @RequestBody PedidosDTO dto) {
         var pedido = service.criarPedido(dto);
         return ResponseEntity.ok(new PedidosDetalhamentoDTO(pedido));
     }
@@ -70,6 +69,7 @@ public class PedidosController {
         } catch (Exception e) {
             throw new InvalidDateFormatException("Formato de data inválido. Por favor, use o formato yyyy-MM-dd'T'HH:mm:ss");
         }
-
     }
+
+
 }
